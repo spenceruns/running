@@ -8,7 +8,6 @@ import {
   endOfWeek,
   isSameMonth,
   isSameDay,
-  parse,
   addMonths,
   subMonths
 } from 'date-fns';
@@ -39,21 +38,6 @@ const Calendar = () => {
     );
   };
 
-  const days = () => {
-    const dateFormat = 'ddd';
-    const days = [];
-    const startDate = startOfWeek(currentDate);
-
-    for (let i = 0; i < 7; i++) {
-      days.push(
-        <div className="column col-center" key={i}>
-          {format(addDays(startDate, i), dateFormat)}
-        </div>
-      );
-    }
-    return <div className="days row">{days}</div>;
-  };
-
   const cells = () => {
     const monthStart = startOfMonth(currentDate);
     const monthEnd = endOfMonth(monthStart);
@@ -74,7 +58,7 @@ const Calendar = () => {
               ? 'disabled' : isSameDay(day, selectedDate)
                 ? 'selected' : ''}`}
             key={day}
-            onClick={() => onDateClick(parse(cloneDay))}
+            onClick={() => onDateClick(cloneDay)}
           >
             <span className="number">{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
@@ -105,7 +89,6 @@ const Calendar = () => {
   return (
     <div className="calendar">
       <div>{header()}</div>
-      <div>{days()}</div>
       <div>{cells()}</div>
     </div>
   );
